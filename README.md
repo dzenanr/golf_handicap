@@ -20,7 +20,8 @@ Context
   on each hole of a course. Each tee is rated by the north american golf associations (USGA and RCGA) to give
   it a rating and a slope, which are measures of difficulty used to calculate the handicap.
 
-  * The handicap, calculated according to those rules http://en.wikipedia.org/wiki/Handicap_(golf)
+  * The handicap, calculated according to those
+  [rules](http://en.wikipedia.org/wiki/Handicap_(golf))
   is a measure of a player scoring potential.
   	* You need to post at least 5 games to get a valid handicap
   	* The handicap is calculated on the best 10 of your last 20 games
