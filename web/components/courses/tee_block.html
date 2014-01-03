@@ -1,0 +1,216 @@
+<polymer-element name="tee-block" attributes="currentTee,currentCourse,showDialog,addMode">
+  <template>
+    <style>
+      .black-overlay{
+         display: block;
+         position: fixed;
+         top: 0%;
+         left: 0%;
+         width: 100%;
+         height: 100%;
+         background-color: black;
+         z-index:1001;
+         -moz-opacity: 0.8;
+         opacity:.70;
+         filter: alpha(opacity=80);
+      }
+      .white-content {
+         display: block;
+         position: fixed;
+         width: 300px;
+         height: 450px;
+         top: 50%; 
+         left: 50%;
+         margin-top: -225px;
+         margin-left: -150px;
+         padding-top: 20px;
+         padding-left: 16px;
+         padding-right: 16px;
+         padding-bottom: 5px;
+         border-width: 2px;
+         border-style: solid;
+         border-radius: 5px;
+         background-color: #f2f8ff;
+         z-index:1002;
+         overflow: auto;
+      }
+      .span-dialog {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+        font-size: 13px;
+      }
+      .div-dialog {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+        font-size: 32px;
+        padding-top: 27px;
+        padding-left: 0px;
+        padding-right: 0px;
+        margin:0;
+        float:right;
+      }
+      .div-left{
+        float:left;
+        width:122px;
+        overflow:hidden;
+        padding:0px;
+      }
+      .div-right{
+        float:left;
+        width:120px;
+        overflow:hidden;
+        padding:0px;
+      } 
+      .submit_btn { 
+        padding: 5px 10px;
+        border: 1px solid #d0d188;
+        -webkit-appearance: button;
+        cursor: pointer;
+        font-weight: normal;
+        line-height: 20px;
+        width: 120px;
+        height: 30px;
+        margin-top: 15px;
+        background: #469D42;
+        border: 0;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        color: #fff;
+        -moz-box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        -webkit-box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        -o-transition: all .3s;
+        -moz-transition: all .3s;
+        -webkit-transition: all .3s;
+        -ms-transition: all .3s;
+      }
+      .submit_btn:hover {
+        background: #3E873A;
+      }
+      .button-column {
+        width: 100px;
+      }
+      .label-form { 
+        display: block; 
+        margin-top: 10px; 
+        margin-right: 10px; 
+        font-size: 14px 
+      }  
+      .select-form {
+        margin: 0;
+        vertical-align: middle;
+        line-height: 20px;
+        display: inline-block;
+        background-color: #ffffff;
+        padding: 4px 6px;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        height: 30px;
+        width: 85%;
+        border: 1px solid #ddd;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        color: #888;
+        font-size: 13px;
+        font-style: italic;
+      }
+      .input-form {
+        margin: 0;
+        vertical-align: middle;
+        line-height: 20px;
+        display: inline-block;
+        background-color: #ffffff;
+        padding: 4px 6px;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        height: 24px;
+        width: 81%;
+        border: 1px solid #ddd;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        color: #888;
+        font-size: 13px;
+        font-style: italic;
+      }
+      fieldset {
+        border: 0px
+      }
+      legend {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        color: #5d5d5d;
+        text-transform: uppercase;
+        text-shadow: 0 1px 0 rgba(255,255,255,.7);
+        text-align: center;
+      }
+      
+    </style>
+    
+    <template if="{{showDialog}}">
+      <div id="modalContent" class="white-content">
+      
+        <fieldset id="flsTee" class="toto">
+          <legend><b>Tee information</b></legend>
+          <div>
+            <label for="txtName" class="label-form">Tee name:</label> 
+            <input type="text" id="txtName" autofocus maxlength="30" 
+              class="input-form" value="{{currentTee.copy().name}}">
+            <img alt="" src="icons/redButton.png" title="" id="imgErrName" hidden="true">
+          </div>
+          <div>
+            <label for="ddlColor" class="label-form">Tee color:</label> 
+            <select id="ddlColor" class="select-form" value="{{currentTee.copy().color}}">
+              <option value="">Select</option>
+              <option value="#EBCD0C" style="background:#EBCD0C">Gold</option>
+              <option value="#000000" style="color:#ffffff; background:#000000">Black</option>
+              <option value="#235DFC" style="background:#235DFC">Blue</option>
+              <option value="#FFFFFF" style="background:#FFFFFF">White</option>
+              <option value="#329C4A" style="background:#329C4A">Green</option>
+              <option value="#FFFC45" style="background:#FFFC45">Yellow</option>
+              <option value="#C7C7C7" style="background:#C7C7C7">Gray</option>
+              <option value="#F23900" style="background:#F23900">Red</option>
+            </select>
+            <img alt="" src="icons/redButton.png" title="" id="imgErrColor" hidden="true">
+          </div>
+          <div>
+            <label for="txtSlope" class="label-form">Slope:</label> 
+            <input type="text" id="txtSlope" maxlength="3" class="input-form" 
+              value="{{currentTee.copy().slope.toString()}}"
+              on-keyDown="{{enforceSlopeNumericInputMask}}"/>
+            <img alt="" src="icons/redButton.png" title="" id="imgErrSlope" hidden="true">
+          </div>
+          <div>
+            <label for="txtRating" class="label-form">Rating:</label> 
+            <input type="text" id="txtRating" maxlength="4" class="input-form" 
+              value="{{currentTee.copy().rating.toString()}}"
+              on-keyDown="{{enforceRatingNumericInputMask}}"/>
+            <img alt="" src="icons/redButton.png" title="" id="imgErrRating" hidden="true">
+          </div>      
+        </fieldset>
+        
+        <div class="div-dialog">
+          <div class="div-left">
+             <button value="" id="btnSave" class="submit_btn" on-click="{{saveTee}}">Save</button>
+          </div>
+          <div class="div-right">
+            <button value="" id="btnAnnuler" class="submit_btn" on-click="{{cancelAction}}">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <div id="modalOverlay" class="black-overlay"></div>
+    </template>
+  </template>
+  <script type="application/dart" src="tee_block.dart"></script>
+</polymer-element>
+
+
+
+

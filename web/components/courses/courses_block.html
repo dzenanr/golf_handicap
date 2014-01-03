@@ -1,0 +1,146 @@
+<polymer-element name="courses-block" attributes="courses,currentCourse,isDisplayed,returnFunction">
+
+  <link rel="import" href="../utilities/modal_ok_cancel_dialog.html"/>
+  <link rel="import" href="../utilities/modal_error_dialog.html"/>
+  
+  <template>
+    <style>
+      .table
+      {
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        width: 955px;
+        text-align: left;
+        border-collapse: collapse;
+      }
+      .table th
+      {
+        font-size: 13px;
+        font-weight: normal;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        padding-right: 2px;
+        padding-left: 2px;
+        background: #54A85F;
+        border-top: 4px solid #3f7f00;
+        border-bottom: 1px solid #fff;
+        color: #ffffff;
+      }
+      .table th:hover
+      {
+        font-size: 13px;
+        font-weight: bold;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        padding-right: 2px;
+        padding-left: 2px;
+        background: #54A85F;
+        border-top: 4px solid #3f7f00;
+        border-bottom: 1px solid #fff;
+        color: #ffffff;
+        cursor: pointer;
+      }
+      .table td
+      {
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-right: 2px;
+        padding-left: 2px;
+        background: #e8ffd1; 
+        border-bottom: 1px solid #3f7f00;
+        color: #000000;
+        border-top: 1px solid transparent;
+      }
+      .table tr:hover td
+      {
+        background: #d4ffaa;
+        color: #000000;
+      }
+      .submit_btn { 
+        padding: 5px 10px;
+        border: 1px solid #d0d188;
+        -webkit-appearance: button;
+        cursor: pointer;
+        font-weight: normal;
+        line-height: 20px;
+        width: 120px;
+        height: 30px;
+        margin-top: 15px;
+        background: #469D42;
+        border: 0;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        color: #fff;
+        -moz-box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        -webkit-box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        -o-transition: all .3s;
+        -moz-transition: all .3s;
+        -webkit-transition: all .3s;
+        -ms-transition: all .3s;
+      }
+      .submit_btn:hover {
+        background: #3E873A;
+      }
+    </style>
+
+    <div style="margin-left:50px">
+      <table>
+        <tr>
+          <td align="right">
+            <button id="btnNewCourse" class="submit_btn" on-click="{{openAdd}}">New course</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table id="tblCourses" class="table">
+              <thead>
+                <tr>
+                  <th scope="col" width="3%"></th>
+                  <th scope="col" width="3%"></th>
+                  <th scope="col" width="33%" title="Sort by name" id="thName" on-click="{{changeSort}}">Course name</th>
+                  <th scope="col" width="14%" title="Sort by country" id="thCountry" on-click="{{changeSort}}">Country</th>
+                  <th scope="col" width="20%" title="Sort by state" id="thState" on-click="{{changeSort}}">State</th>
+                  <th scope="col" width="13%" title="Sort by phone" id="thPhone" on-click="{{changeSort}}">Phone</th>
+                  <th scope="col" width="14%" title="Sort by games played" id="thGamesPlayed" on-click="{{changeSort}}">All games played</th>
+                </tr>
+              </thead>
+              <tbody template repeat="{{course in courses.internalList}}">
+                <tr id="{{course.oid.toString()}}">
+                  <td>
+                    <input type="image" src="icons/edit.png" title="Update this course" 
+                      value="{{course.oid.toString()}}" on-click="{{openForEdit}}"/>
+                  </td>
+                  <td>
+                    <input type="image" src="icons/delete.png" title="Delete this course" 
+                      value="{{course.oid.toString()}}" on-click="{{validateDelete}}"/>
+                  </td>
+                  <td>{{course.name}}</td>
+                  <td>{{course.country}}</td>
+                  <td>{{course.state}}</td>
+                  <td>{{course.phoneNumber}}</td>
+                  <td align="center">{{course.gamesPlayed()}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        
+      </table>
+    </div>
+  
+    <modal-ok-cancel-dialog id="confirmDialog" 
+      message="{{confirmDialogMessage}}"
+      showDialog="{{showConfirmDialog}}"
+      functionIfOk="{{this.doDelete}}"
+      oidConfirm="{{oidConfirmDialog}}"></modal-ok-cancel-dialog>
+      
+    <modal-error-dialog id="errorDialog"
+      message="{{errorDialogMessage}}"
+      showDialog="{{showErrorDialog}}"></modal-error-dialog>
+        
+  </template>
+  <script type="application/dart" src="courses_block.dart"></script>
+</polymer-element>
+
+

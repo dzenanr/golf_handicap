@@ -1,0 +1,68 @@
+<polymer-element name="title-block">
+  <template>
+    <style>
+        /* Page title */
+        .icone-title {
+          width: 55px;
+          height: 55px;
+          margin-top: -15px;
+          margin-left: 15px;
+          float: left;
+        }
+        
+        h2 {
+          display: inline;
+          margin-left: 10px;
+          font-family: 'Verdana';
+          font-size: 24px;
+          color: #5d5d5d;
+          text-shadow: 0 1px 0 rgba(255, 255, 255, .7);
+          vertical-align: middle;
+          border: 0px;
+        }
+        
+        p {
+          display: inline;
+          margin-left: 5px;
+          font-size: 14px;
+          font-style: italic;
+          vertical-align: middle;
+        }
+    </style>
+    <template if={{login}}>
+              <img src="icons/login.png" class="icone-title">
+              <h2>Login /</h2>
+              <p>Login or register to add and edit games</p>
+    </template>
+    <template if={{profile}}>
+              <img src="icons/profile.png" class="icone-title">
+              <h2>Contact Information /</h2>
+              <p>Keep your information up-to-date.</p>
+    </template>
+    <template if={{player}}>
+              <img src="icons/profile.png" class="icone-title">
+              <h2>New player /</h2>
+              <p>Please fill all the fields.</p>
+    </template>
+    <template if={{games}}>
+              <img src="icons/games.png" class="icone-title">
+              <h2>Games /</h2>
+              <p>Are you on a streak? Never up, never in!</p>
+    </template>
+    <template if={{courses}}>
+              <img src="icons/courses.png" class="icone-title">
+              <h2>Courses /</h2>
+              <p>Manage those corners of paradise</p>
+    </template>
+  </template>
+  <script type="application/dart" src="title.dart"></script>
+</polymer-element>
+
+
+
+    
+
+    
+
+
+

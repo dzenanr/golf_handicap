@@ -1,0 +1,218 @@
+<polymer-element name="home-block">
+
+  <link rel="import" href="menu.html"/>
+  <link rel="import" href="title.html"/>
+  <link rel="import" href="login/login.html"/>
+  <link rel="import" href="profile/profile.html"/>
+  <link rel="import" href="games/games.html"/>
+  <link rel="import" href="courses/courses_mngt_block.html"/>
+
+  <template>
+    <style>
+        /* Content */
+        #header {
+          width: 960px;
+          height: 120px;
+        }
+        
+        #main {
+          clear: both;
+          /*width: 960px;
+          padding: 0 10px;*/
+          min-height: 520px;
+        }
+        
+        .hidden {
+          display:none !important;
+        }
+        
+        #menu {width: 940px; height: 40px; padding: 0 10px;overflow:visible;margin-bottom:20px;color:#777777;*position:relative;*z-index:2;min-height:40px;padding-left:20px;padding-right:20px;background: #fff;border: 0;}
+        #menu:after{clear:both;}
+        
+        
+        /* End of general */
+        /* Logo */
+        
+        #site_title { float: left; width: 200px; height: 40px; padding-top: 20px; padding-right: 20px; padding-bottom: 30px; padding-left: 20px; }
+        #site_title h1 { display: block; width: 200px; margin: 0; padding: 0 }
+        #site_title h1 a { color: #fff; font-size: 40px; font-weight: 400; outline: none; }
+        #site_title h1 a:hover { text-decoration: none }
+        #site_title h1 a span { font-size: 14px }
+        
+        /* End of logo */
+      
+        /* Page title */
+        .page-title {
+          margin-left: -5px;
+          padding: 30px 0 35px 0;
+          background: #f8f8f8 url(images/pattern2.jpg) left top repeat;
+          -moz-box-shadow: 0 5px 15px 0 rgba(0,0,0,.05) inset, 0 -5px 15px 0 rgba(0,0,0,.05) inset;
+          -webkit-box-shadow: 0 5px 15px 0 rgba(0,0,0,.05) inset, 0 -5px 15px 0 rgba(0,0,0,.05) inset;
+          box-shadow: 0 5px 15px 0 rgba(0,0,0,.05) inset, 0 -5px 15px 0 rgba(0,0,0,.05) inset;
+          text-align: left;
+          width: 101%;
+        }
+        
+        .container:after {
+          clear: both;
+        }
+        
+        .row {
+          margin-left: -30px;
+        }
+        
+        .page-title-text {
+          width: 100%;
+          min-height: 1px;
+          margin-left: 30px;
+        }
+        
+        .page-title-icon {
+          margin-left: 20px;
+          font-size: 46px;
+          color: #ccc;
+          vertical-align: middle;
+        }
+        
+        .page-content {
+          margin-top: 20px;
+        }
+        
+        .page-content h4 {
+          margin-top: 10px;
+          font-family: Helvetica, Arial, sans-serif;
+          font-size: 16px;
+          color: #5d5d5d;
+          text-transform: uppercase;
+          text-shadow: 0 1px 0 rgba(255,255,255,.7);
+        }
+        
+        .page-content-text {
+          padding: 10px 0;
+          text-align: left;
+        }
+      
+        /* General content helpers */
+        p { margin: 0 0 10px 0; padding: 0; }
+        img { border: none; }
+        blockquote { font-style: italic; margin: 0 0 0 10px;}
+        cite { font-weight: bold; color:#000; }
+        cite span { color: #000; }
+        em { color: #000; font-weight: bold }
+      
+        h1, h2, h3, h4, h5, h6 { color: #000; font-weight: normal; }
+        h1 { font-size: 34px; margin: 0 0 20px; padding: 5px 0 }
+        h2 { font-size: 28px; margin: 0 0 20px; padding: 5px 0 10px; font-weight: 700; border-bottom: 1px solid #626335 }
+        h3 { font-size: 24px; margin: 0 0 15px; padding: 0; }
+        h4 { font-size: 18px; margin: 0 0 15px; padding: 0; }
+        h5 { font-size: 16px; margin: 0 0 10px; padding: 0;  }
+        h6 { font-size: 14px; margin: 0 0 5px; padding: 0; }
+      
+        .cleaner { clear: both }
+        .h10 { height: 10px }
+        .h20 { height: 20px }
+        .h30 { height: 30px }
+        .h40 { height: 40px }
+        .h50 { height: 50px }
+        .h60 { height: 60px }
+      
+        .float_l { float: left }
+        .float_r { float: right }
+        .image_wrapper { display: inline-block; border: 1px solid #b9c695; padding: 4px; background: #fff; margin-bottom: 5px; }
+        .image_fl { float: left; margin: 3px 20px 0 0; }
+        .image_fr { float: right; margin: 3px 0 0 20px; }
+      
+        .list { margin: 20px 0 20px 10px; padding: 0; list-style: none; }
+        .list li { color:#68992a; margin: 0; padding: 0 0 5px 20px; }
+        .list li a { color: #68992a; font-weight: normal; font-size: 12px; text-decoration: none; }
+        .list li a:hover { color: #68992a; text-decoration: underline; }
+      
+      /* End of content */
+    </style>
+    <div id="header">
+        <div id="site_title">
+            <h1><a href="#"><img src="images/logo.png"></a></h1>
+          </div>
+          <div id="menu">
+            <template if={{isRegistered}}>
+              <template if={{isLoggedIn}}>
+                <menu-block id="menu-block" 
+                  type="{{title}}"
+                  gamesFunction="{{this.showGames}}"
+                  coursesFunction="{{this.showCourses}}"
+                  profileFunction="{{this.showProfile}}"
+                  logoutFunction="{{this.doLogout}}"></menu-block> 
+              </template>
+            </template>
+          </div>
+    </div>
+      
+    <div id="main">
+      <!-- Page title -->
+      <div id="page">
+        <div class="page-title">
+          <div class="container">
+            <div class="row">
+              <div class="page-title-text">
+                <title-block type="{{title}}"></title-block>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="page-content container">
+          <div class="row">
+          
+            <template if={{!isRegistered}}>
+              <login-block 
+                players="{{players}}"
+                currentPlayer="{{currentPlayer}}"
+                isDisplayed="true" 
+                loginFunction="{{this.doLogin}}" 
+                registerFunction="{{this.doRegister}}"></login-block>
+            </template>
+            
+            <template if={{isRegistered}}>
+              <template if={{!isLoggedIn}}>
+                <profile-block 
+                  isDisplayed="true" 
+                  isNew="true"
+                  players="{{players}}"
+                  currentPlayer="{{currentPlayer}}"
+                  saveFunction="{{saveFunction}}"
+                  returnFunction="{{this.doProfile}}"
+                  cancelFunction="{{this.cancelCreate}}"></profile-block>
+              </template>
+              
+              <template if={{isLoggedIn}}>
+                <template if={{dispProfile}}>
+                  <profile-block id="profile-block"
+                    isDisplayed="true" 
+                    isNew="false" 
+                    currentPlayer="{{currentPlayer}}"
+                    saveFunction="{{saveFunction}}"></profile-block>
+                </template>
+                <template if={{dispCourses}}>
+                  <courses-mngt-block id="courses-mngt-block" 
+                    courses="{{courses}}"
+                    currentCourse="{{currentCourse}}"
+                    isDisplayed="true"
+                    saveFunction="{{saveFunction}}"></courses-mngt-block>
+                </template>
+                <template if={{dispGames}}>
+                <games-block id="games-block" 
+                  isDisplayed="true"
+                  currentPlayer="{{currentPlayer}}"
+                  courses="{{courses}}"
+                  saveFunction="{{saveFunction}}"></games-block>
+                </template>
+              </template>
+            </template>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script type="application/dart" src="home.dart"></script>
+</polymer-element>

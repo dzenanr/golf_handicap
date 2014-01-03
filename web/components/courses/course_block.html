@@ -1,0 +1,330 @@
+<polymer-element name="course-block" attributes="courses,currentCourse,isDisplayed,addMode,returnFunction">
+
+  <link rel="import" href="tee_block.html"/>
+  <link rel="import" href="../utilities/phone_number.html"/>
+  <link rel="import" href="../utilities/modal_ok_cancel_dialog.html"/>
+  <link rel="import" href="../utilities/modal_error_dialog.html"/>
+  <link rel="import" href="../utilities/modal_success_dialog.html"/>
+
+  <template>
+    <style>
+      .submit_btn, .reset_btn { 
+        padding: 5px 10px;
+        border: 1px solid #d0d188;
+        -webkit-appearance: button;
+        cursor: pointer;
+        font-weight: normal;
+        line-height: 20px;
+        width: 120px;
+        height: 30px;
+        margin-top: 15px;
+        background: #469D42;
+        border: 0;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        color: #fff;
+        -moz-box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        -webkit-box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        -o-transition: all .3s;
+        -moz-transition: all .3s;
+        -webkit-transition: all .3s;
+        -ms-transition: all .3s;
+        margin-right: 15px;
+      }
+      .tee_btn {
+        padding: 5px 10px;
+        border: 1px solid #d0d188;
+        -webkit-appearance: button;
+        cursor: pointer;
+        font-weight: normal;
+        line-height: 20px;
+        width: 120px;
+        height: 30px;
+        margin-top: 15px;
+        background: #469D42;
+        border: 0;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        color: #fff;
+        -moz-box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        -webkit-box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        -o-transition: all .3s;
+        -moz-transition: all .3s;
+        -webkit-transition: all .3s;
+        -ms-transition: all .3s;
+      }
+      .submit_btn:hover, .reset_btn:hover, .tee_btn:hover {
+        background: #3E873A;
+      }
+       #add_form {
+        clear:both;
+        margin-left: 30px;
+      }
+      #formTable {
+        width: 900px;
+      }
+      #formTable td {
+        width: 50%;
+      }
+
+      .label-form { 
+        display: block; 
+        margin-top: 10px; 
+        margin-right: 10px; 
+        font-size: 14px 
+      }  
+      .select-form {
+        width: 84%;
+        margin: 0;
+        vertical-align: middle;
+        line-height: 20px;
+        display: inline-block;
+        background-color: #ffffff;
+        padding: 4px 6px;
+        margin-bottom: 10px;
+        height: 30px;
+        border: 1px solid #ddd;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        color: #888;
+        font-size: 13px;
+        font-style: italic;
+      }
+      .input-form {
+        width: 81%;
+        margin: 0;
+        vertical-align: middle;
+        line-height: 20px;
+        display: inline-block;
+        background-color: #ffffff;
+        padding: 4px 6px;
+        margin-bottom: 10px;
+        height: 24px;
+        border: 1px solid #ddd;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        color: #888;
+        font-size: 13px;
+        font-style: italic;
+      }
+      
+      .teeTable
+      {
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        width: 940px;
+        text-align: left;
+        border-collapse: collapse;
+      }
+      .teeTable th
+      {
+        font-size: 13px;
+        font-weight: normal;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        padding-right: 2px;
+        padding-left: 2px;
+        background: #54A85F;
+        border-top: 4px solid #3f7f00;
+        border-bottom: 1px solid #fff;
+        color: #ffffff;
+      }
+      .teeTable td
+      {
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-right: 2px;
+        padding-left: 2px;
+        background: #e8ffd1; 
+        border-bottom: 1px solid #3f7f00;
+        color: #000000;
+        border-top: 1px solid transparent;
+      }
+      .teeTable tr:hover td
+      {
+        background: #d4ffaa;
+        color: #000000;
+      }
+      fieldset {
+        border: 0px
+      }
+      legend {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        color: #5d5d5d;
+        text-transform: uppercase;
+        text-shadow: 0 1px 0 rgba(255,255,255,.7);
+        margin-left: -5px;
+      } 
+      .cleaner { clear: both }
+      .h30 { height: 30px }
+      .float_r { float: right }
+    </style>
+    
+    <div style="margin-left:50px">
+      <fieldset id="flsCourse">
+        <legend><b>Course information</b></legend>
+        
+        <div id="add_form">
+        
+          <table id="formTable">
+            <tr>
+              <td>
+                <label for="txtName" class="label-form">Name:</label> 
+                <input type="text" id="txtName" autofocus maxlength="100" class="input-form">
+                <img alt="" src="icons/redButton.png" title="Name error msg here" id="imgErrName" hidden="true">
+              </td>
+              <td>
+                <label for="txtAddress" class="label-form">Address:</label> 
+                <input type="text" id="txtAddress" value="{{currentCourse.copy().address}}" class="input-form">
+                <img alt="" src="icons/redButton.png" title="Address error msg here" id="imgErrAddress" hidden="true">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="txtZipPostalCode" class="label-form">Zip / Postal code:</label> 
+                <input type="text" id="txtZipPostalCode" value="{{currentCourse.copy().zipPostalCode}}" class="input-form">
+                <img alt="" src="icons/redButton.png" title="Zip / PC error msg here" id="imgErrZipPostalCode" hidden="true">
+              </td>
+              <td>
+                <label for="country-selector" class="label-form">Country:</label> 
+                <select id="ddlCountry" on-change="{{changeCountry}}" class="select-form">
+                  <option value="">Select</option>
+                  <option value="Canada">Canada</option>
+                  <option value="United States">United States</option>
+                </select>
+                <img alt="" src="icons/redButton.png" title="Country error msg here" id="imgErrCountry" hidden="true">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="state-selector" class="label-form">State / province:</label> 
+                <select id="ddlState" class="select-form"></select>
+                <img alt="" src="icons/redButton.png" title="State error msg here" id="imgErrState" hidden="true">
+              </td>
+              <td>
+                <label for="txtWebsite" class="label-form">Website Url:</label> 
+                <input type="text" id="txtWebsite" value="{{currentCourse.copy().websiteUrl}}" class="input-form">
+                <img alt="" src="icons/redButton.png" title="website url error msg here" id="imgErrWebsite" hidden="true">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="phone-number" class="label-form">Phone number:</label> 
+                <phone-number id="phone-number" phoneNumber="{{currentCourse.copy().phoneNumber}}"></phone-number>
+                <img alt="" src="icons/redButton.png" title="Phone error msg here" id="imgErrPhone" hidden="true">
+              </td>
+              <td>
+                <label for="txtLocation" class="label-form">Location Url:</label> 
+                <input type="text" id="txtLocation" value="{{currentCourse.copy().locationUrl}}" class="input-form">
+                <img alt="" src="icons/redButton.png" title="Location error msg here" id="imgErrLocationUrl" hidden="true">
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div>
+          <button id="btnReturn" class="reset_btn float_r" on-click="{{validateClose}}">Return</button>
+          <button id="btnSave" class="submit_btn float_r" on-click="{{saveCourse}}">Save</button>
+        </div>
+        
+        <div class="cleaner h30"></div>
+        
+      </fieldset>
+    </div>
+
+    <div style="margin-left:50px">
+      <fieldset id="flsTees" hidden="true">
+        <legend><b>Tees information</b></legend>
+          
+        <table>
+          <tr>
+            <td align="right">
+              <button id="btnNewTee" class="tee_btn" on-click="{{openAddTee}}">New tee</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table id="teeTable" class="teeTable">
+                <thead>
+                  <tr>
+                    <th scope="col" width="3%"></th>
+                    <th scope="col" width="3%"></th>
+                    <th scope="col" width="32%" title="Sort by name" id="thName">Tee name</th>
+                    <th scope="col" width="22%" title="Sort by color" id="thColor">Tee color</th>
+                    <th scope="col" width="20%" title="Sort by slope" id="thSlope">Tee slope</th>
+                    <th scope="col" width="20%" title="Sort by rating" id="thRating">Tee rating</th>
+                  </tr>
+                </thead>
+                <tbody template repeat="{{tee in currentCourse.courseTees.internalList}}">
+                  <tr id="{{tee.oid.toString()}}">
+                    <td>
+                      <input type="image" src="icons/edit.png" title="Update this tee" 
+                        value="{{tee.oid.toString()}}" on-click="{{openTeeForEdit}}"/>
+                    </td>
+                    <td>
+                      <input type="image" src="icons/delete.png" title="Delete this tee" 
+                        value="{{tee.oid.toString()}}" on-click="{{validateTeeDelete}}"/>
+                    </td>
+                    <td>{{tee.name}}</td>
+                    <td><div style="width:55px;height:10px;background: {{tee.color}};border:1px solid #000"></div></td>
+                    <td>{{tee.slope}}</td>
+                    <td>{{tee.rating}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </table>
+        
+        <div class="cleaner h30"></div>
+
+      </fieldset>
+    </div>
+  
+
+    <modal-ok-cancel-dialog id="confirmReturnDialog" 
+      message="{{confirmDialogMessage}}"
+      showDialog="{{showConfirmReturnDialog}}"
+      functionIfOk="{{closeSection}}"
+      oidConfirm="{{null}}"></modal-ok-cancel-dialog>
+
+    <modal-ok-cancel-dialog id="confirmDeleteDialog" 
+      message="{{confirmDialogMessage}}"
+      showDialog="{{showConfirmDeleteDialog}}"
+      functionIfOk="{{this.doDelete}}"
+      oidConfirm="{{oidConfirmDialog}}"></modal-ok-cancel-dialog>
+      
+    <modal-error-dialog id="errorDialog"
+      message="{{errorDialogMessage}}"
+      showDialog="{{showErrorDialog}}"></modal-error-dialog>
+      
+    <modal-success-dialog id="errorDialog"
+      message="{{successDialogMessage}}"
+      showDialog="{{showSuccessDialog}}"></modal-success-dialog>
+      
+    <tee-block id="teeBlock"
+      currentTee="{{currentTee}}"
+      currentCourse="{{currentCourse}}"
+      showDialog="{{showTeeDialog}}"
+      addMode="{{teeAddMode}}"
+      saveFunction="{{saveFunction}}"></tee-block> 
+    
+    
+  </template>
+  <script type="application/dart" src="course_block.dart"></script>
+</polymer-element>
+
+

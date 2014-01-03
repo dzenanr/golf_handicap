@@ -1,0 +1,335 @@
+<polymer-element name="games-block">
+
+  <link rel="import" href="../utilities/modal_ok_cancel_dialog.html"/>
+  <link rel="import" href="../utilities/modal_error_dialog.html"/>
+
+  <template>
+    <style>
+      /* Games list */
+      
+      #games { padding: 0; width: 950px; float: left; margin-left:50px; }
+
+      #header_game {
+          margin-top: 20px;
+      }
+
+      #list_game {
+          padding-bottom: 20px;
+      }
+      
+      #add_game {
+          margin-top: 20px;
+          padding-bottom: 30px;
+      }
+      
+      .call-to-action-text {
+          padding: 25px 0 20px 0;
+          text-align: left;
+          background: #f8f8f8;
+          overflow: hidden;
+      }
+      
+      .call-to-action-text:hover {
+          box-shadow:
+              0 3px 10px 0 rgba(0,0,0,.05),
+              0 1px 25px 0 rgba(0,0,0,.05) inset,
+              0 -1px 25px 0 rgba(0,0,0,.05) inset;
+          -o-transition: all .5s;
+          -moz-transition: all .5s;
+          -webkit-transition: all .5s;
+          -ms-transition: all .5s;
+      }
+      
+      .call-to-action-text .ca-text, .call-to-action-text .ca-button {
+          float: left;
+          padding: 0 0 0 35px;
+          line-height: 30px;
+          font-size: 18px;
+          font-style: italic;
+      }
+      
+      .call-to-action-text .ca-button {
+          float: right;
+          padding: 0 35px 0 0;
+      }
+      
+      .call-to-action-text .ca-button button {
+          padding: 5px 22px;
+          background: #469D42;
+          color: #fff;
+          text-decoration: none;
+          -moz-box-shadow:
+              0 1px 25px 0 rgba(0,0,0,.05) inset,
+              0 -1px 25px 0 rgba(0,0,0,.05) inset;
+          -webkit-box-shadow:
+              0 1px 25px 0 rgba(0,0,0,.05) inset,
+              0 -1px 25px 0 rgba(0,0,0,.05) inset;
+          box-shadow:
+              0 1px 25px 0 rgba(0,0,0,.05) inset,
+              0 -1px 25px 0 rgba(0,0,0,.05) inset;
+      }
+      
+      #add_form {
+        clear:both;
+        margin-left: 30px;
+      }
+      #add_form table {
+        width: 915px;
+      }
+      #add_form td {
+        width: 50%;
+      }
+      #add_form label { display: block; margin-top: 10px; margin-right: 10px; font-size: 14px }
+      #add_form select {
+        width: 93%;
+        margin: 0;
+        vertical-align: middle;
+        line-height: 20px;
+        display: inline-block;
+        background-color: #ffffff;
+        padding: 4px 6px;
+        margin-bottom: 10px;
+        height: 30px;
+        border: 1px solid #ddd;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        color: #888;
+        font-size: 13px;
+        font-style: italic;
+      }
+      #add_form input {
+        width: 90%;
+        margin: 0;
+        vertical-align: middle;
+        line-height: 20px;
+        display: inline-block;
+        background-color: #ffffff;
+        padding: 4px 6px;
+        margin-bottom: 10px;
+        height: 24px;
+        border: 1px solid #ddd;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        color: #888;
+        font-size: 13px;
+        font-style: italic;
+      }
+      .submit_btn { 
+        padding: 5px 10px;
+        border: 1px solid #d0d188;
+        -webkit-appearance: button;
+        cursor: pointer;
+        font-weight: normal;
+        line-height: 20px;
+        width: 120px;
+        height: 30px;
+        margin-top: 15px;
+        background: #469D42;
+        border: 0;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        color: #fff;
+        -moz-box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        -webkit-box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        -o-transition: all .3s;
+        -moz-transition: all .3s;
+        -webkit-transition: all .3s;
+        -ms-transition: all .3s;
+      }
+      .submit_btn:hover {
+        background: #3E873A;
+      }
+      #toggle {
+        width: 240px;
+      }
+      .green {
+        color: #469D42;
+      }
+      
+      /* End of games list */
+      h4 {
+        margin-top: 10px;
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        color: #5d5d5d;
+        text-transform: uppercase;
+        text-shadow: 0 1px 0 rgba(255,255,255,.7);
+      }
+      
+      /* Table */
+      .table
+      {
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        width: 955px;
+        text-align: left;
+        border-collapse: collapse;
+      }
+      .table th
+      {
+        font-size: 13px;
+        font-weight: normal;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        padding-right: 2px;
+        padding-left: 2px;
+        background: #54A85F;
+        border-top: 4px solid #3f7f00;
+        border-bottom: 1px solid #fff;
+        color: #ffffff;
+      }
+      .table td
+      {
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-right: 2px;
+        padding-left: 2px;
+        background: #e8ffd1; 
+        border-bottom: 1px solid #3f7f00;
+        color: #000000;
+        border-top: 1px solid transparent;
+      }
+      .table tr:hover td
+      {
+        background: #d4ffaa;
+        color: #000000;
+      }
+      /* End of table */
+    </style>
+      <template if={{isDisplayed}}>
+        <div id="games">
+          <div id="header_game">
+            <h4>{{currentPlayer.firstName}}</h4>
+          </div>
+          
+          
+          <div id="add_game">
+            <div class="call-to-action-text">
+              <div class="ca-text">
+                <p>Add a <span class="green">golf</span> score now.</p>
+              </div>
+              <div class="ca-button">
+                <button on-click="{{toggleAddForm}}" class="submit_btn float_r" name="toggle" id="toggle">Challenge yourself!</button>
+              </div>
+              <div id="add_form" style="display:none;">
+                <table>
+                  <tr>
+                    <td>
+                      <label for="course">Course:</label>
+                      <select name="course" id="course" on-change="{{fetchTees}}">
+                        <option></option>
+                        <option template repeat="{{course in courses.internalList}}" value="{{course.oid.toString()}}">{{course.name}}</option>
+                      </select>
+                      <img alt="" src="icons/redButton.png" title="Course error msg here" id="imgErrCourse" hidden="true">
+                    </td>
+                    <td>
+                      <label for="tee">Tee:</label>
+                      <select name="tee" id="tee">
+                        <option></option>
+                      </select>
+                      <img alt="" src="icons/redButton.png" title="Tee error msg here" id="imgErrTee" hidden="true">
+                      </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label for="date">Date:</label>
+                      <input type="text" id="date" name="date" class="input_field" placeholder="YYYY-MM-DD"
+                        on-keyDown="{{enforceDateInputMask}}" on-blur="{{clearDateInvalid}}" maxlength="10">
+                      <img alt="" src="icons/redButton.png" title="Date error msg here" id="imgErrDate" hidden="true">
+                    </td>
+                    <td>
+                      <label for="realScore">Real Score:</label>
+                      <input type="text" id="realScore" name="realScore" class="input_field" placeholder="" 
+                        on-keyDown="{{enforceIntegerInputMask}}" maxlength="3">
+                      <img alt="" src="icons/redButton.png" title="Real score error msg here" id="imgErrRealScore" hidden="true">
+                      </td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                      <label for="eqScore">Equitable Score:</label>
+                      <input type="text" id="eqScore" name="eqScore" class="input_field" placeholder="" 
+                        on-keyDown="{{enforceIntegerInputMask}}" maxlength="3">
+                      <img alt="" src="icons/redButton.png" title="Eq score error msg here" id="imgErrEqScore" hidden="true">
+                      </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><button on-click="{{saveNewGame}}" class="submit_btn float_r" name="submit" id="submit">Add</button></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        
+          
+          <div id="list_game">
+            <table id="tblGames" class="table">
+              <thead>
+                <tr>
+                  <th scope="col" width="3%"></th>
+                  <th scope="col" width="12%" id="thDate">Date Played</th>
+                  <th scope="col" width="23%" id="thCourse">Course Name</th>
+                  <th scope="col" width="12%" id="thTee">Tee Name</th>
+                  <th scope="col" width="10%" id="thRealScore" align="center">Real Score</th>
+                  <th scope="col" width="10%" id="thEqScore" align="center">Eq. Score</th>
+                  <th scope="col" width="10%" id="thHandicap" align="center">H. After</th>
+                  <th scope="col" width="10%" id="thHandDiff" align="center">H. Diff</th>
+                  <th scope="col" width="10%" id="thNetScore" align="center">Net Score</th>
+                </tr>
+              </thead>
+                <tbody template 
+                  repeat="{{game in currentPlayer.gamesPlayed.internalList}}">
+                  <tr id="{{game.oid.toString()}}">
+                    <td>
+                      <input type="image" src="icons/delete.png" title="Delete this game" 
+                        value="{{game.oid.toString()}}" on-click="{{validateDelete}}"/>
+                    </td>
+                    <td>{{game.datePlayed.toString().substring(0, 10)}}</td>
+                    <td>{{game.teePlayed.parentCourse.name}}</td>
+                    <td>{{game.teePlayed.name}}</td>
+                    <td align="center">{{game.realScore}}</td>
+                    <td align="center">{{game.equitableScore}}</td>
+                    <td align="center">{{game.playerHandicapAfter}}</td>
+                    <td align="center">{{game.handicapDifferential}}</td>
+                    <td align="center">{{game.netScore}}</td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+        
+        </div>
+        
+        <modal-ok-cancel-dialog id="confirmDialog" 
+          message="{{confirmDialogMessage}}"
+          showDialog="{{showConfirmDialog}}"
+          functionIfOk="{{this.doDelete}}"
+          oidConfirm="{{oidConfirmDialog}}"></modal-ok-cancel-dialog>
+          
+        <modal-error-dialog id="errorDialog"
+          message="{{errorDialogMessage}}"
+          showDialog="{{showErrorDialog}}"></modal-error-dialog>
+      
+    </template>
+  </template>
+  <script type="application/dart" src="games.dart"></script>
+</polymer-element>
+
+
+
+    
+
+    
+
+
+

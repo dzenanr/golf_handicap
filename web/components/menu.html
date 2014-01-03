@@ -1,0 +1,112 @@
+<polymer-element name="menu-block">
+  <template>
+    <style>
+      /* Menu */
+      
+      ul.nav {
+        line-height: 20px;
+        text-align: center;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        color: #777777;
+        -webkit-margin-before: 1em;
+        -webkit-margin-after: 1em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+        -webkit-padding-start: 40px;
+        padding: 0;
+        list-style: none;
+        position: relative;
+        left: 0;
+        display: block;
+        margin: 0 10px 0 0;
+        font-size: 14px;
+        text-transform: uppercase;
+        float: right;
+        margin-right: 0;
+      }
+      
+      ul.nav > li {
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        color: #777777;
+        display: list-item;
+        text-align: -webkit-match-parent;
+        line-height: 20px;
+        font-size: 14px;
+        text-transform: uppercase;
+        list-style: none;
+        float: left;
+      }
+      
+      ul.nav > li > a > img.icone {
+        width: 37px;
+        height: 37px;
+      }
+      
+      ul.nav > li > a {
+        display: block;
+        text-decoration: none;
+        float: none;
+        padding: 30px 20px 10px 20px;
+        color: #5d5d5d;
+        text-shadow: none;
+      }
+      
+      ul.nav li a i {
+        line-height: 35px;
+        color: #aaa;
+        display: inline-block;
+        width: 1.25em;
+        text-align: center;
+      }
+      
+      ul.nav li.current-page a {
+        padding-top: 25px;
+        border-top: 5px solid #469D42;
+        background: #f8f8f8
+      }
+      
+      ul.nav li a:hover {
+        background: #f8f8f8;
+        color: #000;
+      }
+      
+      ul.nav li a img {
+        line-height: 35px;
+        color: #aaa;
+      }
+      
+      /* End of menu */
+    </style>
+                <ul class="nav">
+      <template if={{courses}}>
+                  <li class="current-page" id="courses" on-click="{{dispCourses}}"><a href="#"><img src="icons/courses.png" class="icone"><br />Courses</a></li>
+      </template>
+      <template if={{!courses}}>
+                  <li id="courses" on-click="{{dispCourses}}"><a href="#"><img src="icons/courses.png" class="icone"><br />Courses</a></li>
+      </template>
+      <template if={{games}}>
+                  <li class="current-page" id="games" on-click="{{dispGames}}"><a href="#"><img src="icons/games.png" class="icone"><br />Games</a></li>
+      </template>
+      <template if={{!games}}>
+                  <li id="games" on-click="{{dispGames}}"><a href="#"><img src="icons/games.png" class="icone"><br />Games</a></li>
+      </template>
+      <template if={{profile}}>
+                  <li class="current-page" id="profile" on-click="{{dispProfile}}"><a href="#"><img src="icons/profile.png" class="icone"><br />Profile</a></li>
+      </template>
+      <template if={{!profile}}>
+                  <li id="profile" on-click="{{dispProfile}}"><a href="#"><img src="icons/profile.png" class="icone"><br />Profile</a></li>
+      </template>
+                  <li id="logout" on-click="{{logout}}"><a href="#"><img src="icons/logout.png" class="icone"><br />Logout</a></li>
+                </ul>
+  </template>
+  <script type="application/dart" src="menu.dart"></script>
+</polymer-element>
+
+
+
+    
+
+    
+
+
+

@@ -1,0 +1,12 @@
+name: golf_handicap
+version: 0.0.1
+author: Maxim Fournier-Giguere and Pierre-Olivier Nadeau
+description: golf_handicap application that uses dartling for its model.
+environment:
+  sdk: '>=0.8.10+8 <2.0.0'
+dependencies:
+  browser: '>=0.9.0 <0.10.0'
+  dartling:
+    git: git://github.com/dzenanr/dartling.git
+  intl: any
+  polymer: any

@@ -1,0 +1,40 @@
+<polymer-element name="courses-mngt-block" attributes="courses,currentCourse,isDisplayed">
+
+  <link rel="import" href="courses_block.html"/>
+  <link rel="import" href="course_block.html"/>
+
+  <template>
+    <style>
+
+    </style>
+      
+    <template if={{isDisplayed}}>
+          
+      <template if={{displayList}}>
+        <courses-block id="courses-block"
+          courses="{{courses}}"
+          currentCourse="{{currentCourse}}"
+          isDisplayed="{{displayList}}"
+          returnFunction="{{this.coursesSectionClosed}}"
+          saveFunction="{{saveFunction}}"></courses-block>
+      </template>
+        
+      <br/>
+        
+      <template if={{!displayList}}>
+        <course-block id="course-block"
+          courses="{{courses}}"
+          currentCourse="{{currentCourse}}"
+          isDisplayed="{{!displayList}}"
+          addMode="{{addMode}}"
+          returnFunction="{{this.courseSectionClosed}}"
+          saveFunction="{{saveFunction}}"></course-block>
+      </template>
+      
+    </template>
+    
+  </template>
+  <script type="application/dart" src="courses_mngt_block.dart"></script>
+</polymer-element>
+
+

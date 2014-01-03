@@ -1,0 +1,145 @@
+<polymer-element name="golf-handicap-app">
+
+  <link rel="import" href="components/home.html"/>
+
+  <template>
+    <style>
+      /* General */
+      
+      a, a:link, a:visited {
+        color: #469D42;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 11px;
+        cursor: auto;
+      }
+      
+      a:hover {
+        text-decoration: underline;
+      }
+      
+      a.no_css, a.no_css:hover{
+        cursor: text;
+        text-decoration: none;
+        color: #666;
+        font-weight: normal;
+        font-size: 12px;
+      }
+      
+      #wrapper {
+        width: 1000px;
+        margin: 0 auto;
+      }
+      
+      .hidden {
+        display:none !important;
+      }
+      
+      
+      /* End of general */
+      /* Footer */
+      
+      footer {
+        clear: both;
+        margin: 0 auto;
+        padding-bottom: 10px;
+        background: #f8f8f8 url(images/pattern2.jpg) left top repeat;
+        -moz-box-shadow: 0 5px 15px 0 rgba(0,0,0,.05) inset;
+        -webkit-box-shadow: 0 5px 15px 0 rgba(0,0,0,.05) inset;
+        box-shadow: 0 5px 15px 0 rgba(0,0,0,.05) inset;
+        line-height: 20px;
+        margin-left: -5px;
+        margin-right: -4px;
+        height: 295px;
+      }
+      
+      footer .container {
+        width: 100%;
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+      
+      footer .row {
+        margin-left: -30px;
+      }
+      
+      footer .copyright {
+        margin-top: 15px;
+        width: 370px;
+        float: left;
+        min-height: 1px;
+        clear: both;
+        text-align: center;
+        width: 100%;
+      }
+      
+      footer .widget {
+        margin-top: 20px;
+        text-align: left;
+        width: 30%;
+        float: left;
+        min-height: 190px;
+        margin-left: 30px;
+      }
+      
+      footer .widget h4 {
+        margin-top: 20px;
+        font-family: 'Droid Sans', Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color: #5d5d5d;
+        text-transform: uppercase;
+        text-shadow: 0 1px 0 rgba(255,255,255,.7);
+        margin: 10px 0;
+        font-weight: bold;
+        line-height: 20px;
+        text-rendering: optimizelegibility;
+      }
+      
+      footer .widget p {
+        line-height: 24px;
+      }
+      
+      /* End of footer */
+    </style>
+    <div id="wrapper">
+    
+        <home-block id="home-block"
+          players="{{players}}"
+          courses="{{courses}}"
+          currentPlayer="{{currentPlayer}}"
+          currentCourse="{{currentCourse}}"
+          saveFunction="{{this.storeData}}"></home-block>
+        
+      <footer>
+        <div class="container">
+          <div class="row">
+            <div class="widget">
+              <h4>Disclaimer</h4>
+              <ul>
+                <li>We DO NOT provide a USGA nor a RCGA sanctioned Handicap Index.</li>
+                <li>We ARE NOT associated with a Licensed Golf Club.</li>
+                <li>This website and service is for personal & recreational purposes only.</li>
+              </ul>
+            </div>
+            <div class="widget">
+              <h4>About Us</h4>
+              <p>Two MBA students, part-time golf players, trying out the new Google Dart language. This project is for our SIO-6014 class at Universite Laval.</p>
+            </div>
+            <div class="widget">
+              <h4>Contact Us</h4>
+              <p><i class="icon-user"></i><a href="http://www.pierre-olivier.com">Pierre-Olivier Nadeau</a></p>
+              <p><i class="icon-envelope-alt"></i><a href="https://www.facebook.com/mfgiguere">Maxim Fournier-Giguere</a></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="copyright">
+              <p>2013 - Maxim Fournier-Giguere and Pierre-Olivier Nadeau, 2013</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+  </template>
+  <script type="application/dart" src="golf_handicap_app.dart"></script>
+</polymer-element>

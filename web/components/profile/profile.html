@@ -1,0 +1,238 @@
+<polymer-element name="profile-block">
+  <link rel="import" href="../utilities/phone_number.html"/>
+
+  <template>
+    <style>
+      /* Profile page */
+      
+      #contact_form { padding: 0; width: 450px; float: left; margin-left:50px; }
+      #register { padding: 0; width: 100%; float: left; text-align:center; margin-left:50px; }
+      #register_form { width: 450px; margin-left:250px; }
+      #game_data { width: 450px; float: right; margin-right:30px; }
+      #contact_form label, #register_form label { display: block; margin-top: 10px; margin-right: 10px; font-size: 14px }
+      #contact_form input, #register_form input {
+        width: 81%;
+        margin: 0;
+        vertical-align: middle;
+        line-height: 20px;
+        display: inline-block;
+        background-color: #ffffff;
+        padding: 4px 6px;
+        margin-bottom: 10px;
+        height: 24px;
+        border: 1px solid #ddd;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        color: #888;
+        font-size: 13px;
+        font-style: italic;
+      }
+      #contact_form .submit_btn, #register_form .submit_btn { 
+        padding: 5px 10px;
+        border: 1px solid #d0d188;
+        -webkit-appearance: button;
+        cursor: pointer;
+        font-weight: normal;
+        line-height: 20px;
+        width: 120px;
+        height: 30px;
+        margin-top: 15px;
+        background: #469D42;
+        border: 0;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        color: #fff;
+        -moz-box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        -webkit-box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        box-shadow: 0 1px 25px 0 rgba(0,0,0,.05) inset, 0 -1px 25px 0 rgba(0,0,0,.05) inset;
+        -o-transition: all .3s;
+        -moz-transition: all .3s;
+        -webkit-transition: all .3s;
+        -ms-transition: all .3s;
+      }
+      #contact_form .submit_btn_save, #register_form .submit_btn_save { 
+        margin-right: 30px;
+      }
+      #contact_form .submit_btn_cancel, #register_form .submit_btn_cancel { 
+        margin-left: 30px;
+      }
+      #graph {
+        width:450px;
+        height:440px;
+        background-color: #eee;
+        text-align: center;
+        padding: 5px;
+        vertical-align: middle;
+        position: relative;
+      }
+      #tempGraph {
+        color: #000;
+        height: 450px;
+        width: 400px;
+        position:absolute;
+        top:50%;
+        height:10em;
+        margin-top:-5em;
+      }
+      #contact_form select, #register_form select {
+        width: 84%;
+        margin: 0;
+        vertical-align: middle;
+        line-height: 20px;
+        display: inline-block;
+        background-color: #ffffff;
+        padding: 4px 6px;
+        margin-bottom: 10px;
+        height: 30px;
+        border: 1px solid #ddd;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        color: #888;
+        font-size: 13px;
+        font-style: italic;
+      }
+      #confirmationMsg {
+        color: #878787;
+        font-style: italic;
+        width: 260px;
+        height: 30px;
+        text-align: right;
+        padding: 5px 10px;
+        line-height: 20px;
+        margin-top: 15px;
+      }
+      h4 {
+        margin-top: 10px;
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        color: #5d5d5d;
+        text-transform: uppercase;
+        text-shadow: 0 1px 0 rgba(255,255,255,.7);
+      }
+      h6 { font-size: 14px; margin: 0 0 5px; padding: 0; }
+    
+      .cleaner { clear: both }
+      .h30 { height: 30px }
+      .float_l { float: left }
+      .float_r { float: right }
+      
+      
+      /* End of profile */
+    </style>
+      <template if={{isDisplayed}}>
+        <template if={{!isNew}}>
+          <div id="contact_form">
+            <h4>Who are you?</h4>
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname" class="input_field" placeholder="Enter your first name..." value="{{copyPlayer.firstName}}"/>
+            <img alt="" src="icons/redButton.png" title="First name error msg here" id="imgErrFirstName" hidden="true">
+            
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="lastname" class="input_field" placeholder="Enter your last name..." value="{{copyPlayer.lastName}}"/>
+            <img alt="" src="icons/redButton.png" title="Last name error msg here" id="imgErrLastName" hidden="true">
+            
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" class="input_field" placeholder="you@web.com" value="{{copyPlayer.email}}" style="background-color: LightGray; border-color: DarkGray;" disabled readOnly />
+            <img alt="" src="icons/redButton.png" title="Email error msg here" id="imgErrEmail" hidden="true">
+            
+            <label for="birthday">Birthday:</label>
+            <input type="text" id="birthdate" name="birthdate" class="input_field" placeholder="YYYY-MM-DD" value="{{copyPlayer.birthDate.toString().substring(0,10)}}"
+              on-keyDown="{{enforceDateInputMask}}" on-blur="{{clearDateInvalid}}" maxlength="10">
+            <img alt="" src="icons/redButton.png" title="Birthday error msg here" id="imgErrBirthDate" hidden="true">
+            
+            <label for="sex">Sex:</label>
+            <select name="sex" id="sex" value="{{copyPlayer.sex}}">
+              <option value=""></option>
+              <option value="M">M</option>
+              <option value="F">F</option>
+            </select>
+            <img alt="" src="icons/redButton.png" title="Sex error msg here" id="imgErrSex" hidden="true">
+            
+            <label for="phone">Phone number:</label>
+            <phone-number id="phone-number" phoneNumber="{{copyPlayer.phoneNumber}}"></phone-number>
+            <img alt="" src="icons/redButton.png" title="Course error msg here" id="imgErrPhone" hidden="true">
+            
+            <label for="password">New password:</label>
+            <input type="password" id="password" name="password" class="input_field">
+            <img alt="" src="icons/redButton.png" title="Course error msg here" id="imgErrPassword" hidden="true">
+            
+            <div id="confirmationMsg" class="float_l"></div><button on-click="{{saveProfile}}" class="submit_btn submit_btn_save float_r" name="submit" id="submit">Save profile</button>
+            <div class="cleaner h30"></div>
+          </div>
+          
+          <div id="game_data">
+            <h4>Stats</h4>
+            <div id="graph">
+              <template if={{canDisplayGraph()}}>
+                <div id="tempGraph" on-click={{showGraph}}>Click to show graph</div>
+                <div id="statsGraph" on-click={{showGraph}}></div>
+              </template>
+              <template if={{!canDisplayGraph()}}>
+                <div id="tempGraph">Not enough data to show graph. Please play at least 7 games.</div>
+              </template>
+            </div>
+            <div class="cleaner h30"></div>
+            <h6>Current handicap : {{copyPlayer.getCurrentHandicap()}}</h6>
+            <h6>Preferred course : {{copyPlayer.getFavoriteCourse().name}}</h6>
+            <h6>Games played : {{copyPlayer.gamesPlayed.count}}</h6>
+            <div class="cleaner h30"></div>
+          </div>
+      </template>
+      <template if={{isNew}}>
+          <div id="register">
+            <div id="register_form">
+              <h4>Tell us more about you</h4>
+              <label for="firstname">First Name:</label>
+              <input type="text" id="firstname" name="firstname" class="input_field" placeholder="Enter your first name..."/>
+              <img alt="" src="icons/redButton.png" title="Forst name error msg here" id="imgErrFirstName" hidden="true">
+              
+              <label for="lastname">Last Name:</label>
+              <input type="text" id="lastname" name="lastname" class="input_field" placeholder="Enter your last name..."/>
+              <img alt="" src="icons/redButton.png" title="Last name error msg here" id="imgErrLastName" hidden="true">
+              
+              <label for="email">Email:</label>
+              <input type="text" id="email" name="email" class="input_field" placeholder="you@web.com"/>
+              <img alt="" src="icons/redButton.png" title="Email error msg here" id="imgErrEmail" hidden="true">
+              
+              <label for="birthday">Birthday:</label>
+              <input type="text" id="birthdate" name="birthdate" class="input_field" placeholder="YYYY-MM-DD"
+                on-keyDown="{{enforceDateInputMask}}" on-blur="{{clearDateInvalid}}" maxlength="10">
+              <img alt="" src="icons/redButton.png" title="Birthday error msg here" id="imgErrBirthDate" hidden="true">
+              
+              <label for="sex">Sex:</label>
+              <select name="sex" id="sex">
+                <option value=""></option>
+                <option value="M">M</option>
+                <option value="F">F</option>
+              </select>
+              <img alt="" src="icons/redButton.png" title="Sex error msg here" id="imgErrSex" hidden="true">
+              
+              <label for="phone">Phone number:</label>
+              <phone-number id="phone-number" phoneNumber=""></phone-number>
+              <img alt="" src="icons/redButton.png" title="Course error msg here" id="imgErrPhone" hidden="true">
+              
+              <label for="password">Desired password:</label>
+              <input type="password" id="password" name="password" class="input_field">
+              <img alt="" src="icons/redButton.png" title="Course error msg here" id="imgErrPassword" hidden="true">
+              
+              <button on-click="{{createProfile}}" class="submit_btn submit_btn_save float_l" name="create" id="create">Create player</button>
+              <button on-click="{{cancelProfile}}" class="submit_btn submit_btn_cancel float_r" name="cancel" id="cancel">Cancel</button>
+              <div class="cleaner h30">
+              </div>
+            </div>
+          </div>
+      </template>
+    </template>
+  </template>
+  <script type="application/dart" src="profile.dart"></script>
+</polymer-element>
